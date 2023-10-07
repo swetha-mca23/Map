@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
+    <style>
+body {
+  margin: 0;
+  padding: 0;
+}
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+
+.map-overlay {
+  position: absolute;
+  left: 0;
+  padding: 10px;
+}
+
+    </style>
+
+</head>
+<body>
+    <div id="map"></div>
+    <div class="map-overlay top">
+        <button style="font-size: 2em" onclick="move()">
+            Show stops between Sulur To Coimbatore
+        </button>
+    </div>
+    <script>
+        const busStops = [
+  [77.12497,11.02649],
+  [77.04813,11.00456],
+  [77.02804,10.99982],
+  [76.99123,10.99880],
+  [76.95618,11.01674],
+  
+];
+
+
+// TODO: add your own access token
+mapboxgl.accessToken = 'pk.eyJ1Ijoic2VudGhpbGt1cHB1c3dhbXkiLCJhIjoiY2twbTlkMzBlMDQxYjJ2bXcwcG5xdnhzNCJ9.mmPcPQN_3raRRh8Q0S1kEw';
+
+
+// This is the map instance
+let map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  center: [77.12497,11.02649],
+  zoom: 14,
+});
+
+
+// TODO: add a marker to the map at the first coordinates in the array busStops. The marker variable should be named "marker"
+var marker= new mapboxgl.Marker()
+            .setLngLat([77.12497,11.02649])
+            .addTo(map);
+// counter here represents the index of the current bus stop
+let counter = 0;
+function move() {
+  // TODO: move the marker on the map every 1000ms. Use the function marker.setLngLat() to update the marker coordinates
+  // Use counter to access bus stops in the array busStops
+  // Make sure you call move() after you increment the counter.
+  setTimeout(()=> {
+    if (counter>=busStops.length) return;
+    marker.setLngLat(busStops[counter]);
+    counter++;
+    move();
+    },1000);
+}
+
+
+// Do not edit code past this point
+if (typeof module !== 'undefined') {
+  module.exports = { move };
+}
+
+move()
+
+    </script>
+</body>
+</html>
